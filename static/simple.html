@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="simple.css">
+</head>
+
+<body>
+    <!-- Create the canvas that the C++ code will draw into -->
+    <canvas id="canvas"s oncontextmenu="event.preventDefault()"></canvas>
+
+    <!-- Allow the C++ to access the canvas element -->
+    <script type='text/javascript'>
+        window.env = { ENVIRONMENT: 'dev' };
+
+        var Module = {
+            canvas: (function() { return document.getElementById('canvas'); })()
+        };
+
+        if (window.env.ENVIRONMENT === 'dev') {
+            window.onbeforeunload = async (e) => {
+                e.preventDefault();
+                const data = await (await fetch('/api/server/close')).json();
+                window.close();
+            }
+        }
+    </script>
+
+    <script src="simple.gen.js"></script>
+</body>
+
+</html>

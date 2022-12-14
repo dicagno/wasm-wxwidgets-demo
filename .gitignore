@@ -1,0 +1,6 @@
+.vscode
+*.o
+index.js
+*.wasm
+out/*
+.DS_Store
